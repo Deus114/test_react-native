@@ -1,44 +1,60 @@
-import { View, Text, Button, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Button, TextInput, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Login = ({ navigation }) => {
-    const [form, setForm] = useState({
-        email: "",
-        password: "",
-    });
+    const [email, setEmail] = useState("");
+    const [error, setError] = useState(false);
+
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
 
     return (
-        <SafeAreaView className="h-full">
-            <View className="w-full mt-[20%] h-full px-4 my-6">
-                <Text className="text-2xl mt-10">Xin chào</Text>
-                <View className="space-y-2">
-                    <Text className="text-base mt-10">Email</Text>
-                    <View className="border-2 border-black-200 w-full h-14 px-4 rounded-2xl">
-                        <TextInput
-                            label={"Email"}
-                            className={"flex-auto w-64"}
-                            keyboardType="email-address"
-                            mode="outlined"
-                            onChangeText={(e) =>
-                                setForm({ ...form, email: e })}
-                        />
+        <SafeAreaView className="h-full bg-white">
+            <ScrollView>
+                <View className="w-full mt-[20%] h-full px-4 my-6">
+                    <Text className="text-2xl text-green-500 font-bold mt-10 text-center">Xin chào</Text>
+                    <Text className="text-1xl mt-10 text-center">Vui lòng nhập email để tiếp tục</Text>
+                    <View className="space-y-2">
+                        <Text className="text-base mt-10 font-bold">Email</Text>
+                        <View className="border-2 border-black-200 w-full h-14 px-4 rounded-2xl">
+                            <TextInput
+                                label={"Email"}
+                                className={"flex-auto w-full"}
+                                keyboardType="email-address"
+                                mode="outlined"
+                                onChangeText={(e) => {
+                                    setEmail(e)
+                                    if (!validateEmail(e)) {
+                                        setError(true);
+                                    } else {
+                                        setError(false);
+                                    }
+                                }}
+                            />
+                        </View>
+                        <Text style={{ opacity: error ? 1 : 0 }} className="text-1xl text-red-500 mt-2">Email không đúng</Text>
                     </View>
-                </View>
-                {/* <TouchableOpacity className='bg-green-200 border-2 border-black-200 w-full h-16 px-4 rounded-2xl'>
-                    <Text className='text-2xl mt-10'>Đăng nhập</Text>
-                </TouchableOpacity> */}
-                <TouchableOpacity
-                    activeOpacity={0.7}
-                    className="mt-10 bg-green-200 border-2 border-black-200 
+                    <TouchableOpacity
+                        activeOpacity={0.5}
+                        className="mt-10 bg-green-300 border-2 border-black-300
                     rounded-xl min-h-[50px] flex flex-row justify-center items-center"
-                    onPress={() => navigation.navigate('OTP')}
-                >
-                    <Text className="text-primary text-lg">
-                        Tiếp tục
-                    </Text>
-                </TouchableOpacity>
-            </View>
+                        onPress={() => {
+                            if (!error && validateEmail(email)) navigation.navigate('OTP')
+                            else setError(true);
+                        }}
+                    >
+                        <Text className="text-primary text-lg">
+                            Tiếp tục
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
         </SafeAreaView>
     )
 }
