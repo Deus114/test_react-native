@@ -48,7 +48,7 @@ const PasswordSignUp = ({ navigation, route }) => {
                     <View className="border border-grey-200 h-20 px-2 rounded-2xl mt-10 justify-center">
                         <OtpInput
                             numberOfDigits={6}
-                            autoFocus={false}
+                            autoFocus={true}
                             secureTextEntry={true}
                             onTextChange={(pass) => {
                                 setPass(pass);

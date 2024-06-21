@@ -3,10 +3,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { OtpInput } from 'react-native-otp-entry'
 import { postLogin } from '../../services/apiAuthService'
+import { useDispatch } from 'react-redux'
+import { doLogin } from '../../redux/slices/userSlice'
 
 const PasswordLogin = ({ navigation, route }) => {
     const [pass, setPass] = useState("");
     const [error, setError] = useState(false);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setPass("");
@@ -17,6 +20,14 @@ const PasswordLogin = ({ navigation, route }) => {
         let res = await postLogin(route.params.otp, route.params.email, route.params.role, pass);
         if (res && res.returnCode === 1000) {
             setError(false);
+            dispatch(
+                doLogin({
+                    id: "2c78ee70-4e61-4791-b1cf-8348eafe228f",
+                    name: "Duy",
+                    email: route.params.email,
+                    role: route.params.role,
+                })
+            )
             navigation.navigate("Main");
 
         } else {
@@ -33,7 +44,7 @@ const PasswordLogin = ({ navigation, route }) => {
                     <OtpInput
                         ref={clearPass}
                         numberOfDigits={6}
-                        autoFocus={false}
+                        autoFocus={true}
                         secureTextEntry={true}
                         onTextChange={(pass) => {
                             setPass(pass);

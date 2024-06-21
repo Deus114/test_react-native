@@ -5,7 +5,8 @@ export const userSlice = createSlice({
     initialState: {
         email: "",
         name: "",
-        id: ""
+        id: "",
+        role: ""
     },
     reducers: {
         setName: ((state, action) => {
@@ -17,6 +18,9 @@ export const userSlice = createSlice({
         setId: ((state, action) => {
             return { ...state, id: action.payload };
         }),
+        setRole: ((state, action) => {
+            return { ...state, role: action.payload };
+        }),
         doLogin: ((state, action) => {
             console.log(action.payload)
             return {
@@ -24,7 +28,11 @@ export const userSlice = createSlice({
                 id: action.payload.id,
                 name: action.payload.name,
                 email: action.payload.email,
+                role: action.payload.role,
             }
         })
     }
 });
+
+export const { setEmail, setId, setName, setRole, doLogin } = userSlice.actions;
+export default userSlice.reducer;
