@@ -6,7 +6,7 @@ import DividerWithText from '../../components/divider';
 const Auth = ({ navigation }) => {
     return (
         <SafeAreaView className="h-full bg-white">
-            <View className="justify-center w-full h-full px-4 my-6">
+            <View className="justify-center w-full h-full px-4">
                 <Image
                     source={require('../../assets/logolarkEWA.png')}
                     className="max-w-[380px] w-full h-[200px]"
@@ -18,7 +18,9 @@ const Auth = ({ navigation }) => {
                         activeOpacity={0.7}
                         className="mt-10 bg-green-300 border-2 w-[80%] border-black-200 
                         rounded-xl min-h-[50px] flex flex-row justify-center items-center"
-                        onPress={() => navigation.navigate('Login')}
+                        onPress={() => navigation.navigate('Login', {
+                            role: "admin"
+                        })}
                     >
                         <Text className="text-primary font-bold text-lg">
                             QUẢN TRỊ VIÊN
@@ -31,7 +33,9 @@ const Auth = ({ navigation }) => {
                         activeOpacity={0.7}
                         className="mt-5 bg-green-300 border-2 w-[80%] border-black-200 
                         rounded-xl min-h-[50px] flex flex-row justify-center items-center"
-                        onPress={() => navigation.navigate('Login')}
+                        onPress={() => navigation.navigate('Login', {
+                            role: "user"
+                        })}
                     >
                         <Text className="text-primary text-lg font-bold">
                             NHÂN VIÊN
